@@ -35,14 +35,31 @@ int main()
     sf::RenderWindow window(sf::VideoMode(800, 600), "Window");
 
     sf::Font font;
-    if (!font.loadFromFile("fonts/Oswald-Bold.ttf"))
+    if (!font.loadFromFile("../resources/fonts/Oswald-Bold.ttf"))
     {
-        std::cout << "loadFromFile: fail" << std::endl;
+        std::cout << "load font: fail" << std::endl;
         exit(EXIT_FAILURE);
     }
 
     auto startButton = renderButton(font, "START", 550.f, 150.f);
     auto stopButton = renderButton(font, "STOP", 550.f, 350.f);
+
+    /************************************************************/
+
+    sf::Texture texture;
+    if (!texture.loadFromFile("../resources/img/smallIcon.png"))
+    {
+        std::cout << "load texture: fail" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    sf::Sprite sprite[5];
+
+    for (int i = 0; i < 5; ++i)
+    {
+        sprite[i].setTexture(texture);
+        sprite[i].setPosition(100.f + i * 64.f, 0.f);
+    }
 
     while (window.isOpen())
     {
@@ -52,11 +69,23 @@ int main()
             if (event.type == sf::Event::Closed) window.close();
         }
 
+        if (sprite[0].getPosition().y >= 600.f)
+        {
+            for (int i = 0; i < 5; ++i) sprite[i].setPosition(100.f + i * 64.f, 0.f);
+        }
+
         window.clear(sf::Color::Black);
         window.draw(startButton.first);
         window.draw(startButton.second);
         window.draw(stopButton.first);
         window.draw(stopButton.second);
+
+        for (int i = 0; i < 5; ++i) 
+        {
+            sprite[i].move(0.f, 0.05);
+            window.draw(sprite[i]);
+        }
+
         window.display();
     }
 }

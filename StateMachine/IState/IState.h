@@ -5,7 +5,7 @@ class IState
 {
     public:
         virtual void Activate() = 0;
-        virtual void Deactivate() = 0;
+        virtual bool IsDeactivated() = 0;
 };
 
 #endif
