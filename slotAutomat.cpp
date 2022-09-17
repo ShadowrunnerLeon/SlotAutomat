@@ -61,12 +61,30 @@ int main()
         sprite[i].setPosition(100.f + i * 64.f, 0.f);
     }
 
+    sf::Vector2i mousePosition;
+    sf::FloatRect floatRect;
+    bool isStarted = false;
+
     while (window.isOpen())
     {
         sf::Event event;
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed) window.close();
+            if (event.type == sf::Event::MouseButtonPressed)
+            {
+                std::cout << "after" << std::endl;
+                mousePosition = sf::Mouse::getPosition(window);
+                auto translatedMousePosition = window.mapPixelToCoords(mousePosition);
+                if (startButton.first.getGlobalBounds().contains(translatedMousePosition))
+                {
+                    isStarted = true;
+                }
+                else if (stopButton.first.getGlobalBounds().contains(translatedMousePosition))
+                {
+                    isStarted = false;
+                }
+            }
         }
 
         if (sprite[0].getPosition().y >= 600.f)
@@ -80,11 +98,12 @@ int main()
         window.draw(stopButton.first);
         window.draw(stopButton.second);
 
-        for (int i = 0; i < 5; ++i) 
+        if (isStarted)
         {
-            sprite[i].move(0.f, 0.05);
-            window.draw(sprite[i]);
+            for (int i = 0; i < 5; ++i) sprite[i].move(0.f, 0.05);
         }
+
+        for (int i = 0; i < 5; ++i) window.draw(sprite[i]);
 
         window.display();
     }
