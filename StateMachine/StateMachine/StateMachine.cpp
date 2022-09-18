@@ -1,15 +1,15 @@
 #include "StateMachine.h"
+#include <SFML/Graphics.hpp>
 
 StateMachine::StateMachine() {}
 void StateMachine::AddState(IState* state) { states.push_back(state); }
-void StateMachine::StartLoop()
+void StateMachine::Loop()
 {
-    while (1)
+    if (states[index]->GetDeactivateStatus())
     {
-        for (auto state : states)
-        {
-            state->Activate();
-            while (!state->IsDeactivated());
-        }
+        states[index]->SetDeactivateStatus();
+
+        if (index + 1 > states.size() - 1) index = -1;
+        states[++index]->Activate();
     }
 }

@@ -6,13 +6,13 @@
 class StartState : public IState
 {
     private:
-        bool isStart = false;
         bool deactivateFlag = false;
 
     public:
         StartState();
         void Activate() override;
-        bool IsDeactivated() override;
+        bool SetDeactivateStatus() override;
+        bool GetDeactivateStatus() override;
 };
 
 #endif

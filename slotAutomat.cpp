@@ -67,13 +67,18 @@ int main()
 
     while (window.isOpen())
     {
+        window.clear(sf::Color::Black);
+        window.draw(startButton.first);
+        window.draw(startButton.second);
+        window.draw(stopButton.first);
+        window.draw(stopButton.second);
+
         sf::Event event;
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed) window.close();
             if (event.type == sf::Event::MouseButtonPressed)
             {
-                std::cout << "after" << std::endl;
                 mousePosition = sf::Mouse::getPosition(window);
                 auto translatedMousePosition = window.mapPixelToCoords(mousePosition);
                 if (startButton.first.getGlobalBounds().contains(translatedMousePosition))
@@ -91,12 +96,6 @@ int main()
         {
             for (int i = 0; i < 5; ++i) sprite[i].setPosition(100.f + i * 64.f, 0.f);
         }
-
-        window.clear(sf::Color::Black);
-        window.draw(startButton.first);
-        window.draw(startButton.second);
-        window.draw(stopButton.first);
-        window.draw(stopButton.second);
 
         if (isStarted)
         {

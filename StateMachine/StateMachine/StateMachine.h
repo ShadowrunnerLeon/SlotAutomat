@@ -8,11 +8,12 @@ class StateMachine
 {
     private:
         std::vector<IState*> states;
+        int index = 0;
         
     public:
         StateMachine();
         void AddState(IState* state);
-        void StartLoop();
+        void Loop();
 };
 
 #endif
