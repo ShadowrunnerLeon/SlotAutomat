@@ -1,0 +1,38 @@
+#include "SpinState.h"
+
+SpinState::SpinState(RenderHelper& _renderHelper) : renderHelper(_renderHelper) {}
+void SpinState::Activate()
+{
+    sf::Vector2i mousePosition;
+    sf::Event event;
+
+    while (renderHelper.GetWindow().pollEvent(event))
+    {
+        if (event.type == sf::Event::Closed) renderHelper.GetWindow().close();
+        if (event.type == sf::Event::MouseButtonPressed)
+        {
+            mousePosition = sf::Mouse::getPosition(renderHelper.GetWindow());
+            auto translatedMousePosition = renderHelper.GetWindow().mapPixelToCoords(mousePosition);
+            if (renderHelper.GetStopButton().first.getGlobalBounds().contains(translatedMousePosition))
+            {
+                deactivateFlag = true;
+                break;
+            }
+        }
+    }
+
+    if (renderHelper.GetSlots()[0].getPosition().y >= 600.f)
+    {
+        int size = renderHelper.GetSlots().size();
+        for (int i = 0; i < size; ++i) renderHelper.GetSlots()[i].setPosition(100.f + i * 64.f, 0.f);
+    }
+
+    for (auto& slot : renderHelper.GetSlots()) 
+    {
+        slot.move(0.f, 0.05);
+        renderHelper.GetWindow().draw(slot);
+    }
+}
+
+void SpinState::SetDeactivateStatus() { deactivateFlag = false; }
+bool SpinState::GetDeactivateStatus() { return deactivateFlag; }

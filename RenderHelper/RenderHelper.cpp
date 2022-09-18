@@ -1,6 +1,16 @@
 #include "RenderHelper.h"
 
-RenderHelper::RenderHelper(sf::Font& _font) : font(_font) {}
+RenderHelper::RenderHelper(sf::RenderWindow& _window) : window(_window) 
+{
+    if (!font.loadFromFile("../resources/fonts/Oswald-Bold.ttf"))
+    {
+        std::cout << "load font: fail" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    startButton = renderButton("START", 550.f, 150.f);
+    stopButton = renderButton("STOP", 550.f, 350.f);
+}
 
 std::pair<sf::Text, sf::VertexArray> RenderHelper::renderButton(const sf::String &textString, float x, float y)
 {
@@ -29,4 +39,43 @@ std::pair<sf::Text, sf::VertexArray> RenderHelper::renderButton(const sf::String
     }
 
     return std::make_pair(text, boundingRect);
+}
+
+void RenderHelper::renderSlots()
+{
+    sf::Texture texture;
+    if (!texture.loadFromFile("../resources/img/smallIcon.png"))
+    {
+        std::cout << "load texture: fail" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    sf::Sprite sprite;
+
+    for (int i = 0; i < 5; ++i)
+    {
+        sprite.setTexture(texture);
+        sprite.setPosition(100.f + i * 64.f, 0.f);
+        slots.push_back(sprite);
+    }
+}
+
+sf::RenderWindow& RenderHelper::GetWindow()
+{
+    return window;
+}
+
+std::pair<sf::Text, sf::VertexArray>& RenderHelper::GetStartButton()
+{
+    return startButton;
+}
+
+std::pair<sf::Text, sf::VertexArray>& RenderHelper::GetStopButton()
+{
+    return stopButton;
+}
+
+std::vector<sf::Sprite>& RenderHelper::GetSlots()
+{
+    return slots;
 }

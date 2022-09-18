@@ -12,4 +12,8 @@ void StateMachine::Loop()
         if (index + 1 > states.size() - 1) index = -1;
         states[++index]->Activate();
     }
+    else
+    {
+        states[index]->Activate();
+    }
 }
