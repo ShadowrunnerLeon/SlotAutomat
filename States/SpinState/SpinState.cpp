@@ -9,14 +9,6 @@ void SpinState::Activate()
 
     std::cout << elapsedTime.asSeconds() << std::endl;
 
-    if (elapsedTime >= sf::seconds(5))
-    {
-        elapsedTime = sf::seconds(0);
-        std::cout << "timeout" << std::endl;
-        deactivateFlag = true;
-        return;
-    }
-
     while (renderHelper.GetWindow().pollEvent(event))
     {
         if (event.type == sf::Event::Closed) renderHelper.GetWindow().close();
@@ -51,6 +43,12 @@ void SpinState::Activate()
     }
 
     elapsedTime += timer.restart();
+    if (elapsedTime >= sf::seconds(5))
+    {
+        elapsedTime = sf::seconds(0);
+        std::cout << "timeout" << std::endl;
+        deactivateFlag = true;
+    }
 }
 
 void SpinState::SetDeactivateStatus() { deactivateFlag = false; }

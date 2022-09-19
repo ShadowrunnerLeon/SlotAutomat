@@ -4,14 +4,20 @@
 StopState::StopState(RenderHelper& _renderHelper) : renderHelper(_renderHelper) {}
 void StopState::Activate()
 {
-    std::cout << "stop" << std::endl;
+    sf::Clock timer;
 
     for (auto& slot : renderHelper.GetSlots()) 
     {
         renderHelper.GetWindow().draw(slot);
     }
 
-    deactivateFlag = true;
+    elapsedTime += timer.restart();
+    std::cout << elapsedTime.asSeconds() << std::endl;
+    if (elapsedTime >= sf::seconds(2))
+    {
+        elapsedTime = sf::seconds(0);
+        deactivateFlag = true;
+    } 
 }
 
 void StopState::SetDeactivateStatus() { deactivateFlag = false; }
