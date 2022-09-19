@@ -7,6 +7,7 @@
 class RenderHelper
 {
     private:
+        std::vector<sf::Texture> textures = std::vector<sf::Texture>(5, sf::Texture());
         sf::Font font;
         sf::RenderWindow& window;
         std::pair<sf::Text, sf::VertexArray> startButton, stopButton;
@@ -20,8 +21,10 @@ class RenderHelper
         sf::RenderWindow& GetWindow();
         std::pair<sf::Text, sf::VertexArray>& GetStartButton();
         std::pair<sf::Text, sf::VertexArray>& GetStopButton();
+        sf::Sprite& GetSlot(int index);
         std::vector<sf::Sprite>& GetSlots();
-        
+        sf::Texture& GetTexture(int index);
+        int GetNumber();
 };
 
 #endif

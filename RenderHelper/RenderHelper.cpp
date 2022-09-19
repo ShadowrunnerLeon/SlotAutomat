@@ -43,18 +43,20 @@ std::pair<sf::Text, sf::VertexArray> RenderHelper::renderButton(const sf::String
 
 void RenderHelper::renderSlots()
 {
-    sf::Texture texture;
-    if (!texture.loadFromFile("../resources/img/smallIcon.png"))
-    {
-        std::cout << "load texture: fail" << std::endl;
-        exit(EXIT_FAILURE);
-    }
-
-    sf::Sprite sprite;
-
     for (int i = 0; i < 5; ++i)
     {
-        sprite.setTexture(texture);
+        std::string path("../resources/img/");
+        path += std::to_string(i + 1);
+        path += ".png";
+
+        if (!textures[i].loadFromFile(path))
+        {
+            std::cout << "load texture: fail" << std::endl;
+            exit(EXIT_FAILURE);
+        }
+
+        sf::Sprite sprite;
+        sprite.setTexture(textures[i]);
         sprite.setPosition(100.f + i * 64.f, 0.f);
         slots.push_back(sprite);
     }
@@ -73,6 +75,21 @@ std::pair<sf::Text, sf::VertexArray>& RenderHelper::GetStartButton()
 std::pair<sf::Text, sf::VertexArray>& RenderHelper::GetStopButton()
 {
     return stopButton;
+}
+
+sf::Sprite& RenderHelper::GetSlot(int index)
+{
+    return slots[index];
+}
+
+sf::Texture& RenderHelper::GetTexture(int index)
+{
+    return textures[index];
+}
+
+int RenderHelper::GetNumber()
+{
+    return slots.size();
 }
 
 std::vector<sf::Sprite>& RenderHelper::GetSlots()

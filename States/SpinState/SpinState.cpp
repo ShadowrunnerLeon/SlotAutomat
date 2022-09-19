@@ -5,6 +5,17 @@ void SpinState::Activate()
 {
     sf::Vector2i mousePosition;
     sf::Event event;
+    sf::Clock timer;
+
+    std::cout << elapsedTime.asSeconds() << std::endl;
+
+    if (elapsedTime >= sf::seconds(5))
+    {
+        elapsedTime = sf::seconds(0);
+        std::cout << "timeout" << std::endl;
+        deactivateFlag = true;
+        return;
+    }
 
     while (renderHelper.GetWindow().pollEvent(event))
     {
@@ -32,6 +43,8 @@ void SpinState::Activate()
         slot.move(0.f, 0.05);
         renderHelper.GetWindow().draw(slot);
     }
+
+    elapsedTime += timer.restart();
 }
 
 void SpinState::SetDeactivateStatus() { deactivateFlag = false; }
