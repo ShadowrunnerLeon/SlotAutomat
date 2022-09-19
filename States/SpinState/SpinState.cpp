@@ -32,20 +32,22 @@ void SpinState::Activate()
         }
     }
 
-    if (renderHelper.GetSlot(0).getPosition().y >= 600.f)
+    for (int i = 0; i < 5; ++i)
     {
-        int size = renderHelper.GetSlots().size();
-        for (int i = 0; i < size; ++i)
+        if (renderHelper.GetSlot(i * 5).getPosition().y >= 520.f)
         {
-            renderHelper.GetSlot(i).setTexture(renderHelper.GetTexture(rand() % size));
-            renderHelper.GetSlot(i).setPosition(100.f + i * 64.f, 0.f);
+            for (int j = 0; j < 5; ++j)
+            {
+                renderHelper.GetSlot(i * 5 + j).setTexture(renderHelper.GetTexture(rand() % 5));
+                renderHelper.GetSlot(i * 5 + j).setPosition(100.f + j * 64.f, 200.f - i * 64.f);
+            }
         }
     }
 
     for (auto& slot : renderHelper.GetSlots()) 
     {
         slot.move(0.f, 0.1);
-        renderHelper.GetWindow().draw(slot);
+        if (slot.getPosition().y >= 200.f) renderHelper.GetWindow().draw(slot);
     }
 
     elapsedTime += timer.restart();

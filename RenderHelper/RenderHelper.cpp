@@ -54,11 +54,17 @@ void RenderHelper::renderSlots()
             std::cout << "load texture: fail" << std::endl;
             exit(EXIT_FAILURE);
         }
+    }
 
-        sf::Sprite sprite;
-        sprite.setTexture(textures[i]);
-        sprite.setPosition(100.f + i * 64.f, 0.f);
-        slots.push_back(sprite);
+    for (int i = 0; i < 5; ++i)
+    {
+        for (int j = 0; j < 5; ++j)
+        {
+            sf::Sprite sprite;
+            sprite.setTexture(textures[rand() % 5]);
+            sprite.setPosition(100.f + j * 64.f, 200.f - i * 64.f);
+            slots.push_back(sprite);
+        }
     }
 }
 
@@ -85,11 +91,6 @@ sf::Sprite& RenderHelper::GetSlot(int index)
 sf::Texture& RenderHelper::GetTexture(int index)
 {
     return textures[index];
-}
-
-int RenderHelper::GetNumber()
-{
-    return slots.size();
 }
 
 std::vector<sf::Sprite>& RenderHelper::GetSlots()

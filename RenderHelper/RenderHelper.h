@@ -24,7 +24,6 @@ class RenderHelper
         sf::Sprite& GetSlot(int index);
         std::vector<sf::Sprite>& GetSlots();
         sf::Texture& GetTexture(int index);
-        int GetNumber();
 };
 
 #endif
