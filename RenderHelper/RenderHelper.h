@@ -14,6 +14,7 @@ class RenderHelper
         std::vector<sf::Sprite> slots;
         sf::VertexArray redLine = sf::VertexArray(sf::Lines, 8);
         sf::Text score;
+        int scoreInteger = 0;
 
     public:
         RenderHelper(sf::RenderWindow& _window);
@@ -30,6 +31,7 @@ class RenderHelper
         sf::Texture& GetTexture(int index);
         sf::VertexArray& GetRedLine();
         sf::Text& GetScore();
+        int& GetScoreInt(); 
 };
 
 #endif

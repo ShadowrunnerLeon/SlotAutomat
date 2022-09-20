@@ -7,7 +7,7 @@ void SpinState::Activate()
     sf::Event event;
     sf::Clock timer;
 
-    std::cout << elapsedTime.asSeconds() << std::endl;
+    //std::cout << elapsedTime.asSeconds() << std::endl;
 
     while (renderHelper.GetWindow().pollEvent(event))
     {

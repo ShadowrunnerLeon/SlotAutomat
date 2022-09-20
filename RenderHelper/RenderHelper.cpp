@@ -75,14 +75,14 @@ void RenderHelper::renderRedLine()
     float height = 64.f;
     float width = 320.f;
 
-    redLine[0].position = sf::Vector2f(left - 10.f, top);
-    redLine[1].position = sf::Vector2f(left + 10.f + width, top);
-    redLine[2].position = sf::Vector2f(left + 10.f + width, top);
-    redLine[3].position = sf::Vector2f(left + 10.f + width, top + height);
-    redLine[4].position = sf::Vector2f(left + 10.f + width, top + height);
-    redLine[5].position = sf::Vector2f(left - 10.f, top + height);
-    redLine[6].position = sf::Vector2f(left - 10.f, top + height);
-    redLine[7].position = sf::Vector2f(left - 10.f, top);
+    redLine[0].position = sf::Vector2f(left - 10.f, top - 10.f);
+    redLine[1].position = sf::Vector2f(left + 10.f + width, top - 10.f);
+    redLine[2].position = sf::Vector2f(left + 10.f + width, top - 10.f);
+    redLine[3].position = sf::Vector2f(left + 10.f + width, top + height + 10.f);
+    redLine[4].position = sf::Vector2f(left + 10.f + width, top + height + 10.f);
+    redLine[5].position = sf::Vector2f(left - 10.f, top + height + 10.f);
+    redLine[6].position = sf::Vector2f(left - 10.f, top + height + 10.f);
+    redLine[7].position = sf::Vector2f(left - 10.f, top - 10.f);
 
     for (int i = 0; i < 8; ++i)
     {
@@ -137,4 +137,9 @@ sf::VertexArray& RenderHelper::GetRedLine()
 sf::Text& RenderHelper::GetScore()
 {
     return score;
+}
+
+int& RenderHelper::GetScoreInt()
+{
+    return scoreInteger;
 }
