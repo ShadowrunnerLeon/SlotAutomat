@@ -16,7 +16,7 @@ void StartState::Activate()
             if (renderHelper.GetStartButton().first.getGlobalBounds().contains(translatedMousePosition))
             {
                 deactivateFlag = true;
-                break;
+                return;
             }
         }
     }

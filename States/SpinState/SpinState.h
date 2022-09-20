@@ -8,7 +8,7 @@ class SpinState : public IState
 {
     private:
         bool deactivateFlag = false;
-        RenderHelper renderHelper;
+        RenderHelper& renderHelper;
         sf::Time elapsedTime = sf::seconds(0);
 
     public:

@@ -18,8 +18,9 @@ void SpinState::Activate()
             auto translatedMousePosition = renderHelper.GetWindow().mapPixelToCoords(mousePosition);
             if (renderHelper.GetStopButton().first.getGlobalBounds().contains(translatedMousePosition))
             {
+                elapsedTime = sf::seconds(0);
                 deactivateFlag = true;
-                break;
+                return;
             }
         }
     }

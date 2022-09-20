@@ -4,19 +4,27 @@
 StopState::StopState(RenderHelper& _renderHelper) : renderHelper(_renderHelper) {}
 void StopState::Activate()
 {
-    sf::Clock timer;
-
     for (auto& slot : renderHelper.GetSlots()) 
     {
-        renderHelper.GetWindow().draw(slot);
+        if (slot.getPosition().y >= 200.f) renderHelper.GetWindow().draw(slot);
     }
 
-    elapsedTime += timer.restart();
-    std::cout << elapsedTime.asSeconds() << std::endl;
-    if (elapsedTime >= sf::seconds(2))
+    sf::Vector2i mousePosition;
+    sf::Event event;
+
+    while (renderHelper.GetWindow().pollEvent(event))
     {
-        elapsedTime = sf::seconds(0);
-        deactivateFlag = true;
+        if (event.type == sf::Event::Closed) renderHelper.GetWindow().close();
+        if (event.type == sf::Event::MouseButtonPressed)
+        {
+            mousePosition = sf::Mouse::getPosition(renderHelper.GetWindow());
+            auto translatedMousePosition = renderHelper.GetWindow().mapPixelToCoords(mousePosition);
+            if (renderHelper.GetStartButton().first.getGlobalBounds().contains(translatedMousePosition))
+            {
+                deactivateFlag = true;
+                return;
+            }
+        }
     } 
 }
 

@@ -68,6 +68,37 @@ void RenderHelper::renderSlots()
     }
 }
 
+void RenderHelper::renderRedLine()
+{
+    float top = 328.f;
+    float left = 100.f;
+    float height = 64.f;
+    float width = 320.f;
+
+    redLine[0].position = sf::Vector2f(left - 10.f, top);
+    redLine[1].position = sf::Vector2f(left + 10.f + width, top);
+    redLine[2].position = sf::Vector2f(left + 10.f + width, top);
+    redLine[3].position = sf::Vector2f(left + 10.f + width, top + height);
+    redLine[4].position = sf::Vector2f(left + 10.f + width, top + height);
+    redLine[5].position = sf::Vector2f(left - 10.f, top + height);
+    redLine[6].position = sf::Vector2f(left - 10.f, top + height);
+    redLine[7].position = sf::Vector2f(left - 10.f, top);
+
+    for (int i = 0; i < 8; ++i)
+    {
+        redLine[i].color = sf::Color::Red;
+    }
+}
+
+void RenderHelper::renderScore()
+{
+    score.setFont(font);
+    score.setString("0");
+    score.setCharacterSize(48);
+    score.setFillColor(sf::Color::White);
+    score.setPosition(550.f, 50.f);
+}
+
 sf::RenderWindow& RenderHelper::GetWindow()
 {
     return window;
@@ -96,4 +127,14 @@ sf::Texture& RenderHelper::GetTexture(int index)
 std::vector<sf::Sprite>& RenderHelper::GetSlots()
 {
     return slots;
+}
+
+sf::VertexArray& RenderHelper::GetRedLine()
+{
+    return redLine;
+}
+
+sf::Text& RenderHelper::GetScore()
+{
+    return score;
 }

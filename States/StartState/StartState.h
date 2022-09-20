@@ -8,7 +8,7 @@ class StartState : public IState
 {
     private:
         bool deactivateFlag = false;
-        RenderHelper renderHelper;
+        RenderHelper& renderHelper;
 
     public:
         StartState(RenderHelper& _renderHelper);

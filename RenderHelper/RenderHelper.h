@@ -12,11 +12,15 @@ class RenderHelper
         sf::RenderWindow& window;
         std::pair<sf::Text, sf::VertexArray> startButton, stopButton;
         std::vector<sf::Sprite> slots;
+        sf::VertexArray redLine = sf::VertexArray(sf::Lines, 8);
+        sf::Text score;
 
     public:
         RenderHelper(sf::RenderWindow& _window);
         std::pair<sf::Text, sf::VertexArray> renderButton(const sf::String &textString, float x, float y);
         void renderSlots();
+        void renderRedLine();
+        void renderScore();
 
         sf::RenderWindow& GetWindow();
         std::pair<sf::Text, sf::VertexArray>& GetStartButton();
@@ -24,6 +28,8 @@ class RenderHelper
         sf::Sprite& GetSlot(int index);
         std::vector<sf::Sprite>& GetSlots();
         sf::Texture& GetTexture(int index);
+        sf::VertexArray& GetRedLine();
+        sf::Text& GetScore();
 };
 
 #endif

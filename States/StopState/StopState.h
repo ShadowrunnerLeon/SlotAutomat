@@ -8,8 +8,7 @@ class StopState : public IState
 {
     private:
         bool deactivateFlag = false;
-        RenderHelper renderHelper;
-        sf::Time elapsedTime = sf::seconds(0);
+        RenderHelper& renderHelper;
 
     public:
         StopState(RenderHelper& _renderHelper);

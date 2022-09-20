@@ -12,6 +12,8 @@ int main()
     RenderHelper renderHelper(window);
 
     renderHelper.renderSlots();
+    renderHelper.renderRedLine();
+    renderHelper.renderScore();
 
     StartState startState(renderHelper);
     SpinState spinState(renderHelper);
@@ -25,10 +27,12 @@ int main()
     while (window.isOpen())
     {
         window.clear(sf::Color::Black);
+        window.draw(renderHelper.GetScore());
         window.draw(renderHelper.GetStartButton().first);
         window.draw(renderHelper.GetStartButton().second);
         window.draw(renderHelper.GetStopButton().first);
         window.draw(renderHelper.GetStopButton().second);
+        window.draw(renderHelper.GetRedLine());
 
         stateMachine.Loop();
 
