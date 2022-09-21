@@ -8,11 +8,14 @@ RenderHelper::RenderHelper(sf::RenderWindow& _window) : window(_window)
         exit(EXIT_FAILURE);
     }
 
-    startButton = renderButton("START", 550.f, 150.f);
-    stopButton = renderButton("STOP", 550.f, 350.f);
+    startButton = RenderButton("START", 550.f, 150.f);
+    stopButton = RenderButton("STOP", 550.f, 350.f);
+    textures = std::vector<sf::Texture>(5, sf::Texture());
+    redLine = sf::VertexArray(sf::Lines, 8);
+    scoreInteger = 0;
 }
 
-std::pair<sf::Text, sf::VertexArray> RenderHelper::renderButton(const sf::String &textString, float x, float y)
+std::pair<sf::Text, sf::VertexArray> RenderHelper::RenderButton(const sf::String &textString, float x, float y) const
 {
     sf::Text text;
     text.setFont(font);
@@ -41,7 +44,7 @@ std::pair<sf::Text, sf::VertexArray> RenderHelper::renderButton(const sf::String
     return std::make_pair(text, boundingRect);
 }
 
-void RenderHelper::renderSlots()
+void RenderHelper::RenderSlots()
 {
     for (int i = 0; i < 5; ++i)
     {
@@ -64,12 +67,12 @@ void RenderHelper::renderSlots()
             int textureIndex = rand() % 5;
             sprite.setTexture(textures[textureIndex]);
             sprite.setPosition(100.f + j * 64.f, 200.f - i * 64.f);
-            slots.push_back(std::make_pair(sprite, textureIndex));
+            slots.push_back(SlotTextureIndex(sprite, textureIndex));
         }
     }
 }
 
-void RenderHelper::renderRedLine()
+void RenderHelper::RenderRedLine()
 {
     float top = 328.f;
     float left = 100.f;
@@ -91,7 +94,7 @@ void RenderHelper::renderRedLine()
     }
 }
 
-void RenderHelper::renderScore()
+void RenderHelper::RenderScore()
 {
     score.setFont(font);
     score.setString("0");
@@ -115,7 +118,7 @@ std::pair<sf::Text, sf::VertexArray>& RenderHelper::GetStopButton()
     return stopButton;
 }
 
-std::pair<sf::Sprite, int>& RenderHelper::GetSlot(int index)
+SlotTextureIndex& RenderHelper::GetSlot(int index)
 {
     return slots[index];
 }
@@ -125,14 +128,14 @@ sf::Texture& RenderHelper::GetTexture(int index)
     return textures[index];
 }
 
-std::vector<std::pair<sf::Sprite, int>>& RenderHelper::GetSlots()
+std::vector<SlotTextureIndex>& RenderHelper::GetSlots()
 {
     return slots;
 }
 
 void RenderHelper::SetTextureIndex(int index, int value)
 {
-    slots[index].second = value;
+    slots[index].textureIndex = value;
 }
 
 sf::VertexArray& RenderHelper::GetRedLine()
@@ -145,7 +148,7 @@ sf::Text& RenderHelper::GetScore()
     return score;
 }
 
-int& RenderHelper::GetScoreInt()
+int RenderHelper::GetScoreInt() const
 {
     return scoreInteger;
 }

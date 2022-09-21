@@ -23,4 +23,4 @@ void StartState::Activate()
 }
 
 void StartState::SetDeactivateStatus() { deactivateFlag = false; }
-bool StartState::GetDeactivateStatus() { return deactivateFlag; }
+bool StartState::GetDeactivateStatus() const { return deactivateFlag; }

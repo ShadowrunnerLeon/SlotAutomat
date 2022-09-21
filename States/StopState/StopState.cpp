@@ -6,7 +6,10 @@ void StopState::Activate()
 {
     for (auto& slot : renderHelper.GetSlots()) 
     {
-        if (slot.first.getPosition().y >= 200.f) renderHelper.GetWindow().draw(slot.first);
+        if (slot.sprite.getPosition().y >= 200.f)
+        {
+            renderHelper.GetWindow().draw(slot.sprite);
+        }
     }
 
     sf::Vector2i mousePosition;
@@ -14,17 +17,22 @@ void StopState::Activate()
 
     while (renderHelper.GetWindow().pollEvent(event))
     {
-        if (event.type == sf::Event::Closed) renderHelper.GetWindow().close();
+        if (event.type == sf::Event::Closed)
+        {
+            renderHelper.GetWindow().close();
+        }
+
         if (event.type == sf::Event::MouseButtonPressed)
         {
             mousePosition = sf::Mouse::getPosition(renderHelper.GetWindow());
             auto translatedMousePosition = renderHelper.GetWindow().mapPixelToCoords(mousePosition);
             if (renderHelper.GetStartButton().first.getGlobalBounds().contains(translatedMousePosition))
             {
+                sf::FloatRect redLineBounds = renderHelper.GetRedLine().getBounds();
+
                 for (int i = 0; i < 5; ++i)
                 {
-                    sf::FloatRect redLineBounds = renderHelper.GetRedLine().getBounds();
-                    sf::FloatRect slotBounds = renderHelper.GetSlot(i * 5).first.getGlobalBounds();
+                    sf::FloatRect slotBounds = renderHelper.GetSlot(i * 5).sprite.getGlobalBounds();
                     sf::Vector2f leftTop(slotBounds.left, slotBounds.top);
                     sf::Vector2f rightTop(slotBounds.left + slotBounds.width, slotBounds.top);
                     sf::Vector2f rightBottom(slotBounds.left + slotBounds.width, slotBounds.top + slotBounds.height);
@@ -35,12 +43,16 @@ void StopState::Activate()
                         int texturesNumber[5] = {0, 0, 0, 0, 0};
                         int maxMatchTexturesNumber = 0;
                         
+                        std::cout << "stop " << i << ": ";
                         for (int j = 0; j < 5; ++j)
                         {
-                            int textureIndex = renderHelper.GetSlot(i * 5 + j).second;
+                            int textureIndex = renderHelper.GetSlot(i * 5 + j).textureIndex;
                             ++texturesNumber[textureIndex];
                             maxMatchTexturesNumber = std::max(maxMatchTexturesNumber, texturesNumber[textureIndex]);
+                            std::cout << textureIndex << " ";
                         }
+
+                        std::cout << std::endl;
 
                         renderHelper.UpdateScoreInt(maxMatchTexturesNumber * 500);
                         renderHelper.GetScore().setString(std::to_string(renderHelper.GetScoreInt()));
@@ -57,4 +69,4 @@ void StopState::Activate()
 }
 
 void StopState::SetDeactivateStatus() { deactivateFlag = false; }
-bool StopState::GetDeactivateStatus() { return deactivateFlag; }
+bool StopState::GetDeactivateStatus() const { return deactivateFlag; }

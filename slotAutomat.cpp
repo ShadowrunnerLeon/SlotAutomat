@@ -11,12 +11,12 @@ int main()
     sf::RenderWindow window(sf::VideoMode(800, 600), "Window");
     RenderHelper renderHelper(window);
 
-    renderHelper.renderSlots();
-    renderHelper.renderRedLine();
-    renderHelper.renderScore();
+    renderHelper.RenderSlots();
+    renderHelper.RenderRedLine();
+    renderHelper.RenderScore();
 
     StartState startState(renderHelper);
-    SpinState spinState(renderHelper);
+    SpinState spinState(renderHelper, sf::seconds(5));
     StopState stopState(renderHelper);
 
     StateMachine stateMachine;

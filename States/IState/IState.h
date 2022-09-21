@@ -6,7 +6,7 @@ class IState
     public:
         virtual void Activate() = 0;
         virtual void SetDeactivateStatus() = 0;
-        virtual bool GetDeactivateStatus() = 0;
+        virtual bool GetDeactivateStatus() const = 0;
 };
 
 #endif

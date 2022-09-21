@@ -14,7 +14,7 @@ class StopState : public IState
         StopState(RenderHelper& _renderHelper);
         void Activate() override;
         void SetDeactivateStatus() override;
-        bool GetDeactivateStatus() override;
+        bool GetDeactivateStatus() const override;
 };
 
 #endif

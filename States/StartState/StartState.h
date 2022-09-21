@@ -14,7 +14,7 @@ class StartState : public IState
         StartState(RenderHelper& _renderHelper);
         void Activate() override;
         void SetDeactivateStatus() override;
-        bool GetDeactivateStatus() override;
+        bool GetDeactivateStatus() const override;
 };
 
 #endif

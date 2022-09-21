@@ -9,13 +9,14 @@ class SpinState : public IState
     private:
         bool deactivateFlag = false;
         RenderHelper& renderHelper;
-        sf::Time elapsedTime = sf::seconds(0);
+        sf::Time elapsedTime;
+        sf::Time timer;
 
     public:
-        SpinState(RenderHelper& _renderHelper);
+        SpinState(RenderHelper& _renderHelper, sf::Time _timer);
         void Activate() override;
         void SetDeactivateStatus() override;
-        bool GetDeactivateStatus() override; 
+        bool GetDeactivateStatus() const override; 
 };
 
 #endif
