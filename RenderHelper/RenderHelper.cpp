@@ -61,9 +61,10 @@ void RenderHelper::renderSlots()
         for (int j = 0; j < 5; ++j)
         {
             sf::Sprite sprite;
-            sprite.setTexture(textures[rand() % 5]);
+            int textureIndex = rand() % 5;
+            sprite.setTexture(textures[textureIndex]);
             sprite.setPosition(100.f + j * 64.f, 200.f - i * 64.f);
-            slots.push_back(sprite);
+            slots.push_back(std::make_pair(sprite, textureIndex));
         }
     }
 }
@@ -114,7 +115,7 @@ std::pair<sf::Text, sf::VertexArray>& RenderHelper::GetStopButton()
     return stopButton;
 }
 
-sf::Sprite& RenderHelper::GetSlot(int index)
+std::pair<sf::Sprite, int>& RenderHelper::GetSlot(int index)
 {
     return slots[index];
 }
@@ -124,9 +125,14 @@ sf::Texture& RenderHelper::GetTexture(int index)
     return textures[index];
 }
 
-std::vector<sf::Sprite>& RenderHelper::GetSlots()
+std::vector<std::pair<sf::Sprite, int>>& RenderHelper::GetSlots()
 {
     return slots;
+}
+
+void RenderHelper::SetTextureIndex(int index, int value)
+{
+    slots[index].second = value;
 }
 
 sf::VertexArray& RenderHelper::GetRedLine()
@@ -142,4 +148,9 @@ sf::Text& RenderHelper::GetScore()
 int& RenderHelper::GetScoreInt()
 {
     return scoreInteger;
+}
+
+void RenderHelper::UpdateScoreInt(int value)
+{
+    scoreInteger += value;
 }

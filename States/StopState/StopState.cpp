@@ -6,7 +6,7 @@ void StopState::Activate()
 {
     for (auto& slot : renderHelper.GetSlots()) 
     {
-        if (slot.getPosition().y >= 200.f) renderHelper.GetWindow().draw(slot);
+        if (slot.first.getPosition().y >= 200.f) renderHelper.GetWindow().draw(slot.first);
     }
 
     sf::Vector2i mousePosition;
@@ -24,7 +24,7 @@ void StopState::Activate()
                 for (int i = 0; i < 5; ++i)
                 {
                     sf::FloatRect redLineBounds = renderHelper.GetRedLine().getBounds();
-                    sf::FloatRect slotBounds = renderHelper.GetSlot(i * 5).getGlobalBounds();
+                    sf::FloatRect slotBounds = renderHelper.GetSlot(i * 5).first.getGlobalBounds();
                     sf::Vector2f leftTop(slotBounds.left, slotBounds.top);
                     sf::Vector2f rightTop(slotBounds.left + slotBounds.width, slotBounds.top);
                     sf::Vector2f rightBottom(slotBounds.left + slotBounds.width, slotBounds.top + slotBounds.height);
@@ -32,29 +32,17 @@ void StopState::Activate()
 
                     if (redLineBounds.contains(leftTop) && redLineBounds.contains(rightTop) && redLineBounds.contains(rightBottom) && redLineBounds.contains(leftBottom))
                     {
-                        std::cout << "intersects" << std::endl;
+                        int texturesNumber[5] = {0, 0, 0, 0, 0};
+                        int maxMatchTexturesNumber = 0;
+                        
                         for (int j = 0; j < 5; ++j)
                         {
-                            for (int k = 0; k < 5; ++k)
-                            {
-                                if (renderHelper.GetSlot(i * 5 + j).getTexture() == &(renderHelper.GetTexture(k)))
-                                {
-                                    std::cout << "match textures" << std::endl;
-                                    ++texturesMatchNumber[k];
-                                    break;
-                                }
-                            }
+                            int textureIndex = renderHelper.GetSlot(i * 5 + j).second;
+                            ++texturesNumber[textureIndex];
+                            maxMatchTexturesNumber = std::max(maxMatchTexturesNumber, texturesNumber[textureIndex]);
                         }
 
-                        int maxMatchNumber = 0;
-                        for (int j = 0; j < 5; ++j)
-                        {
-                            maxMatchNumber = std::max(maxMatchNumber, texturesMatchNumber[j]);
-                            // clear
-                            texturesMatchNumber[j] = 0;
-                        }
-
-                        renderHelper.GetScoreInt() += maxMatchNumber * 500;
+                        renderHelper.UpdateScoreInt(maxMatchTexturesNumber * 500);
                         renderHelper.GetScore().setString(std::to_string(renderHelper.GetScoreInt()));
 
                         break;

@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
+
 class RenderHelper
 {
     private:
@@ -11,7 +12,7 @@ class RenderHelper
         sf::Font font;
         sf::RenderWindow& window;
         std::pair<sf::Text, sf::VertexArray> startButton, stopButton;
-        std::vector<sf::Sprite> slots;
+        std::vector<std::pair<sf::Sprite, int>> slots;
         sf::VertexArray redLine = sf::VertexArray(sf::Lines, 8);
         sf::Text score;
         int scoreInteger = 0;
@@ -26,12 +27,14 @@ class RenderHelper
         sf::RenderWindow& GetWindow();
         std::pair<sf::Text, sf::VertexArray>& GetStartButton();
         std::pair<sf::Text, sf::VertexArray>& GetStopButton();
-        sf::Sprite& GetSlot(int index);
-        std::vector<sf::Sprite>& GetSlots();
+        std::pair<sf::Sprite, int>& GetSlot(int index);
+        std::vector<std::pair<sf::Sprite, int>>& GetSlots();
+        void SetTextureIndex(int index, int value);
         sf::Texture& GetTexture(int index);
         sf::VertexArray& GetRedLine();
         sf::Text& GetScore();
         int& GetScoreInt(); 
+        void UpdateScoreInt(int value);
 };
 
 #endif

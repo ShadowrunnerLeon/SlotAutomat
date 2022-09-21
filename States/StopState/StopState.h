@@ -9,7 +9,6 @@ class StopState : public IState
     private:
         bool deactivateFlag = false;
         RenderHelper& renderHelper;
-        int texturesMatchNumber[5];
 
     public:
         StopState(RenderHelper& _renderHelper);

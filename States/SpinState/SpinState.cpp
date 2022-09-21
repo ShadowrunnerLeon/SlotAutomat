@@ -27,20 +27,22 @@ void SpinState::Activate()
 
     for (int i = 0; i < 5; ++i)
     {
-        if (renderHelper.GetSlot(i * 5).getPosition().y >= 520.f)
+        if (renderHelper.GetSlot(i * 5).first.getPosition().y >= 520.f)
         {
             for (int j = 0; j < 5; ++j)
             {
-                renderHelper.GetSlot(i * 5 + j).setTexture(renderHelper.GetTexture(rand() % 5));
-                renderHelper.GetSlot(i * 5 + j).setPosition(100.f + j * 64.f, 200.f - i * 64.f);
+                int textureIndex = rand() % 5;
+                renderHelper.GetSlot(i * 5 + j).first.setTexture(renderHelper.GetTexture(textureIndex));
+                renderHelper.GetSlot(i * 5 + j).first.setPosition(100.f + j * 64.f, 200.f - i * 64.f);
+                renderHelper.SetTextureIndex(i * 5 + j, textureIndex);
             }
         }
     }
 
     for (auto& slot : renderHelper.GetSlots()) 
     {
-        slot.move(0.f, 0.1);
-        if (slot.getPosition().y >= 200.f) renderHelper.GetWindow().draw(slot);
+        slot.first.move(0.f, 0.1);
+        if (slot.first.getPosition().y >= 200.f) renderHelper.GetWindow().draw(slot.first);
     }
 
     elapsedTime += timer.restart();
