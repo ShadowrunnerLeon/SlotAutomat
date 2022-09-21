@@ -30,32 +30,23 @@ void StopState::Activate()
             {
                 sf::FloatRect redLineBounds = renderHelper.GetRedLine().getBounds();
 
-                for (int i = 0; i < 5; ++i)
+                for (int i = 4; i >= 0; --i)
                 {
                     sf::FloatRect slotBounds = renderHelper.GetSlot(i * 5).sprite.getGlobalBounds();
-                    sf::Vector2f leftTop(slotBounds.left, slotBounds.top);
-                    sf::Vector2f rightTop(slotBounds.left + slotBounds.width, slotBounds.top);
-                    sf::Vector2f rightBottom(slotBounds.left + slotBounds.width, slotBounds.top + slotBounds.height);
-                    sf::Vector2f leftBottom(slotBounds.left, slotBounds.top + slotBounds.height);
 
-                    if (redLineBounds.contains(leftTop) && redLineBounds.contains(rightTop) && redLineBounds.contains(rightBottom) && redLineBounds.contains(leftBottom))
+                    if (slotBounds.left >= 90.f && slotBounds.top >= 318.f && slotBounds.left + slotBounds.width <= 90.f + 340.f && slotBounds.top + slotBounds.height <= 84.f + 318.f)
                     {
                         int texturesNumber[5] = {0, 0, 0, 0, 0};
                         int maxMatchTexturesNumber = 0;
                         
-                        std::cout << "stop " << i << ": ";
                         for (int j = 0; j < 5; ++j)
                         {
                             int textureIndex = renderHelper.GetSlot(i * 5 + j).textureIndex;
                             ++texturesNumber[textureIndex];
                             maxMatchTexturesNumber = std::max(maxMatchTexturesNumber, texturesNumber[textureIndex]);
-                            std::cout << textureIndex << " ";
                         }
 
-                        std::cout << std::endl;
-
-                        renderHelper.UpdateScoreInt(maxMatchTexturesNumber * 500);
-                        renderHelper.GetScore().setString(std::to_string(renderHelper.GetScoreInt()));
+                        renderHelper.UpdateScore(maxMatchTexturesNumber * 500);
 
                         break;
                     }

@@ -11,9 +11,10 @@ class SpinState : public IState
         RenderHelper& renderHelper;
         sf::Time elapsedTime;
         sf::Time timer;
+        float spinSpeed;
 
     public:
-        SpinState(RenderHelper& _renderHelper, sf::Time _timer);
+        SpinState(RenderHelper& _renderHelper, sf::Time _timer, float _spinSpeed);
         void Activate() override;
         void SetDeactivateStatus() override;
         bool GetDeactivateStatus() const override; 

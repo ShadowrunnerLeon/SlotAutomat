@@ -1,6 +1,6 @@
 #include "SpinState.h"
 
-SpinState::SpinState(RenderHelper& _renderHelper, sf::Time _timer) : renderHelper(_renderHelper), timer(_timer) 
+SpinState::SpinState(RenderHelper& _renderHelper, sf::Time _timer, float _spinSpeed) : renderHelper(_renderHelper), timer(_timer), spinSpeed(_spinSpeed) 
 {
     elapsedTime = sf::seconds(0);
 }
@@ -10,8 +10,6 @@ void SpinState::Activate()
     sf::Vector2i mousePosition;
     sf::Event event;
     sf::Clock clock;
-
-    //std::cout << elapsedTime.asSeconds() << std::endl;
 
     while (renderHelper.GetWindow().pollEvent(event))
     {
@@ -37,23 +35,19 @@ void SpinState::Activate()
     {
         if (renderHelper.GetSlot(i * 5).sprite.getPosition().y >= 520.f)
         {
-            std::cout << "spin " << i << ": ";
             for (int j = 0; j < 5; ++j)
             {
                 int textureIndex = rand() % 5;
                 renderHelper.GetSlot(i * 5 + j).sprite.setTexture(renderHelper.GetTexture(textureIndex));
                 renderHelper.GetSlot(i * 5 + j).sprite.setPosition(100.f + j * 64.f, 200.f - i * 64.f);
                 renderHelper.SetTextureIndex(i * 5 + j, textureIndex);
-                std::cout << textureIndex << " ";
             }
-
-            std::cout << std::endl;
         }
     }
 
     for (auto& slot : renderHelper.GetSlots()) 
     {
-        slot.sprite.move(0.f, 0.1);
+        slot.sprite.move(0.f, spinSpeed);
         if (slot.sprite.getPosition().y >= 200.f)
         {
             renderHelper.GetWindow().draw(slot.sprite);

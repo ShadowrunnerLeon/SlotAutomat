@@ -16,7 +16,7 @@ int main()
     renderHelper.RenderScore();
 
     StartState startState(renderHelper);
-    SpinState spinState(renderHelper, sf::seconds(5));
+    SpinState spinState(renderHelper, sf::seconds(5), 0.1);
     StopState stopState(renderHelper);
 
     StateMachine stateMachine;

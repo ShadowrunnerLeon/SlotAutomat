@@ -74,10 +74,10 @@ void RenderHelper::RenderSlots()
 
 void RenderHelper::RenderRedLine()
 {
-    float top = 328.f;
-    float left = 100.f;
-    float height = 64.f;
-    float width = 320.f;
+    float top = 328.f;      // 318
+    float left = 100.f;     // 90
+    float height = 64.f;    // 84
+    float width = 320.f;    // 340
 
     redLine[0].position = sf::Vector2f(left - 10.f, top - 10.f);
     redLine[1].position = sf::Vector2f(left + 10.f + width, top - 10.f);
@@ -143,17 +143,13 @@ sf::VertexArray& RenderHelper::GetRedLine()
     return redLine;
 }
 
-sf::Text& RenderHelper::GetScore()
+sf::Text RenderHelper::GetScore() const
 {
     return score;
 }
 
-int RenderHelper::GetScoreInt() const
-{
-    return scoreInteger;
-}
-
-void RenderHelper::UpdateScoreInt(int value)
+void RenderHelper::UpdateScore(int value)
 {
     scoreInteger += value;
+    score.setString(std::to_string(scoreInteger));
 }

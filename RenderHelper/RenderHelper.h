@@ -38,9 +38,8 @@ class RenderHelper
         void SetTextureIndex(int index, int value);
         sf::Texture& GetTexture(int index);
         sf::VertexArray& GetRedLine();
-        sf::Text& GetScore();
-        int GetScoreInt() const; 
-        void UpdateScoreInt(int value);
+        sf::Text GetScore() const;
+        void UpdateScore(int value);
 };
 
 #endif
