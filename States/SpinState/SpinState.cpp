@@ -31,16 +31,16 @@ void SpinState::Update()
         }
     }
 
-    for (int i = 0; i < 5; ++i)
+    for (int i = 0; i < NUM_SLOTS; ++i)
     {
-        if (renderHelper.GetSlot(i * 5).sprite.getPosition().y >= 520.f)
+        if (renderHelper.GetSlot(i * NUM_SLOTS).sprite.getPosition().y >= END_LINE_Y)
         {
-            for (int j = 0; j < 5; ++j)
+            for (int j = 0; j < NUM_SLOTS; ++j)
             {
-                int textureIndex = rand() % 5;
-                renderHelper.GetSlot(i * 5 + j).sprite.setTexture(renderHelper.GetTexture(textureIndex));
-                renderHelper.GetSlot(i * 5 + j).sprite.setPosition(100.f + j * 64.f, 200.f - i * 64.f);
-                renderHelper.SetTextureIndex(i * 5 + j, textureIndex);
+                int textureIndex = rand() % NUM_SLOTS;
+                renderHelper.GetSlot(i * NUM_SLOTS + j).sprite.setTexture(renderHelper.GetTexture(textureIndex));
+                renderHelper.GetSlot(i * NUM_SLOTS + j).sprite.setPosition(START_LINE_X + j * 64.f, START_LINE_Y - i * 64.f);
+                renderHelper.SetTextureIndex(i * NUM_SLOTS + j, textureIndex);
             }
         }
     }
@@ -48,7 +48,7 @@ void SpinState::Update()
     for (auto& slot : renderHelper.GetSlots()) 
     {
         slot.sprite.move(0.f, spinSpeed);
-        if (slot.sprite.getPosition().y >= 200.f)
+        if (slot.sprite.getPosition().y >= START_LINE_Y)
         {
             renderHelper.GetWindow().draw(slot.sprite);
         }

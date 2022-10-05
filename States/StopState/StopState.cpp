@@ -6,7 +6,7 @@ void StopState::Update()
 {
     for (auto& slot : renderHelper.GetSlots()) 
     {
-        if (slot.sprite.getPosition().y >= 200.f)
+        if (slot.sprite.getPosition().y >= START_LINE_Y)
         {
             renderHelper.GetWindow().draw(slot.sprite);
         }
@@ -32,16 +32,16 @@ void StopState::Update()
 
                 for (int i = 4; i >= 0; --i)
                 {
-                    sf::FloatRect slotBounds = renderHelper.GetSlot(i * 5).sprite.getGlobalBounds();
+                    sf::FloatRect slotBounds = renderHelper.GetSlot(i * NUM_SLOTS).sprite.getGlobalBounds();
 
                     if (slotBounds.left >= 90.f && slotBounds.top >= 318.f && slotBounds.left + slotBounds.width <= 90.f + 340.f && slotBounds.top + slotBounds.height <= 84.f + 318.f)
                     {
-                        int texturesNumber[5] = {0, 0, 0, 0, 0};
+                        int texturesNumber[NUM_SLOTS] = {0, 0, 0, 0, 0};
                         int maxMatchTexturesNumber = 0;
                         
-                        for (int j = 0; j < 5; ++j)
+                        for (int j = 0; j < NUM_SLOTS; ++j)
                         {
-                            int textureIndex = renderHelper.GetSlot(i * 5 + j).textureIndex;
+                            int textureIndex = renderHelper.GetSlot(i * NUM_SLOTS + j).textureIndex;
                             ++texturesNumber[textureIndex];
                             maxMatchTexturesNumber = std::max(maxMatchTexturesNumber, texturesNumber[textureIndex]);
                         }

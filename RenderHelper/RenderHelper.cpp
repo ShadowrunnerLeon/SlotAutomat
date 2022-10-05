@@ -66,7 +66,7 @@ void RenderHelper::RenderSlots()
             sf::Sprite sprite;
             int textureIndex = rand() % 5;
             sprite.setTexture(textures[textureIndex]);
-            sprite.setPosition(100.f + j * 64.f, 200.f - i * 64.f);
+            sprite.setPosition(START_LINE_X + j * 64.f, START_LINE_Y - i * 64.f);
             slots.push_back(SlotTextureIndex(sprite, textureIndex));
         }
     }

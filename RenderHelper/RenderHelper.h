@@ -4,6 +4,12 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
+
+#define NUM_SLOTS 5
+#define START_LINE_X 100.f 
+#define START_LINE_Y 200.f
+#define END_LINE_Y 520.f
+
 struct SlotTextureIndex
 {
     sf::Sprite sprite;
