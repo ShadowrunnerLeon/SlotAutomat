@@ -5,15 +5,15 @@ StateMachine::StateMachine() {}
 void StateMachine::AddState(IState* state) { states.push_back(state); }
 void StateMachine::Loop()
 {
-    if (states[index]->GetDeactivateStatus())
+    if (states[index]->IsFinished())
     {
-        states[index]->SetDeactivateStatus();
+        states[index]->SetFinishStatus();
 
         if (index + 1 > states.size() - 1) index = -1;
-        states[++index]->Activate();
+        states[++index]->Update();
     }
     else
     {
-        states[index]->Activate();
+        states[index]->Update();
     }
 }

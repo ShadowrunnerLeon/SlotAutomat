@@ -1,7 +1,7 @@
 #include "StartState.h"
 
 StartState::StartState(RenderHelper& _renderHelper) : renderHelper(_renderHelper) {}
-void StartState::Activate()
+void StartState::Update()
 {
     sf::Vector2i mousePosition;
     sf::Event event;
@@ -15,12 +15,9 @@ void StartState::Activate()
             auto translatedMousePosition = renderHelper.GetWindow().mapPixelToCoords(mousePosition);
             if (renderHelper.GetStartButton().first.getGlobalBounds().contains(translatedMousePosition))
             {
-                deactivateFlag = true;
+                SetFinishStatus(true);
                 return;
             }
         }
     }
 }
-
-void StartState::SetDeactivateStatus() { deactivateFlag = false; }
-bool StartState::GetDeactivateStatus() const { return deactivateFlag; }

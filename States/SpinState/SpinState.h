@@ -7,7 +7,7 @@
 class SpinState : public IState
 {
     private:
-        bool deactivateFlag = false;
+        bool SetFinishStatusfalse;
         RenderHelper& renderHelper;
         sf::Time elapsedTime;
         sf::Time timer;
@@ -15,9 +15,7 @@ class SpinState : public IState
 
     public:
         SpinState(RenderHelper& _renderHelper, sf::Time _timer, float _spinSpeed);
-        void Activate() override;
-        void SetDeactivateStatus() override;
-        bool GetDeactivateStatus() const override; 
+        void Update() override;
 };
 
 #endif

@@ -5,7 +5,7 @@ SpinState::SpinState(RenderHelper& _renderHelper, sf::Time _timer, float _spinSp
     elapsedTime = sf::seconds(0);
 }
 
-void SpinState::Activate()
+void SpinState::Update()
 {
     sf::Vector2i mousePosition;
     sf::Event event;
@@ -25,7 +25,7 @@ void SpinState::Activate()
             if (renderHelper.GetStopButton().first.getGlobalBounds().contains(translatedMousePosition))
             {
                 elapsedTime = sf::seconds(0);
-                deactivateFlag = true;
+                SetFinishStatus(true);
                 return;
             }
         }
@@ -59,9 +59,6 @@ void SpinState::Activate()
     {
         elapsedTime = sf::seconds(0);
         std::cout << "timeout" << std::endl;
-        deactivateFlag = true;
+        SetFinishStatus(true);
     }
 }
-
-void SpinState::SetDeactivateStatus() { deactivateFlag = false; }
-bool SpinState::GetDeactivateStatus() const { return deactivateFlag; }

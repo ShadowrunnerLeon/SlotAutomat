@@ -3,10 +3,13 @@
 
 class IState 
 {
+    private:
+        bool finishStatus;
+
     public:
-        virtual void Activate() = 0;
-        virtual void SetDeactivateStatus() = 0;
-        virtual bool GetDeactivateStatus() const = 0;
+        virtual void Update() = 0;
+        void SetFinishStatus(bool status);
+        bool IsFinished() const;
 };
 
 #endif

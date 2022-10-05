@@ -2,7 +2,7 @@
 #include "../../RenderHelper/RenderHelper.h"
 
 StopState::StopState(RenderHelper& _renderHelper) : renderHelper(_renderHelper) {}
-void StopState::Activate()
+void StopState::Update()
 {
     for (auto& slot : renderHelper.GetSlots()) 
     {
@@ -52,12 +52,9 @@ void StopState::Activate()
                     }
                 }
 
-                deactivateFlag = true;
+                SetFinishStatus(true);
                 return;
             }
         }
     } 
 }
-
-void StopState::SetDeactivateStatus() { deactivateFlag = false; }
-bool StopState::GetDeactivateStatus() const { return deactivateFlag; }
