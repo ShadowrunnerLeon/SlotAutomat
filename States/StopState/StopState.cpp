@@ -3,6 +3,14 @@
 
 StopState::StopState(RenderHelper& _renderHelper) : State(_renderHelper) {}
 
+inline bool IsStopButtonPressed() const
+{
+    sf::Vector2i mousePosition;
+    mousePosition = sf::Mouse::getPosition(GetRenderHelper().GetWindow());
+    auto translatedMousePosition = GetRenderHelper().GetWindow().mapPixelToCoords(mousePosition);
+    return GetRenderHelper().GetStartButton().first.getGlobalBounds().contains(translatedMousePosition);
+}
+
 inline bool StopState::SlotsInBounds(int range) const 
 {
     sf::FloatRect slotBounds = GetRenderHelper().GetSlot(range * NUM_SLOTS).sprite.getGlobalBounds(); 
@@ -24,6 +32,18 @@ inline void CalculateScore(int range)
     GetRenderHelper().UpdateScore(maxMatchTexturesNumber * 500);
 }
 
+inline void FindSlotsInBounds()
+{
+    for (int i = 4; i >= 0; --i)
+    {
+        if (SlotsInBounds(i)) 
+        { 
+            CalculateScore(i);
+            break;
+        }
+    }
+}
+
 void StopState::Update()
 {
     for (auto& slot : GetRenderHelper().GetSlots()) 
@@ -34,33 +54,16 @@ void StopState::Update()
         }
     }
 
-    sf::Vector2i mousePosition;
     sf::Event event;
 
     while (GetRenderHelper().GetWindow().pollEvent(event))
     {
         if (event.type == sf::Event::Closed) GetRenderHelper().GetWindow().close();
-
-        if (event.type == sf::Event::MouseButtonPressed)
+        if (event.type == sf::Event::MouseButtonPressed && IsStopButtonPressed())
         {
-            mousePosition = sf::Mouse::getPosition(GetRenderHelper().GetWindow());
-            auto translatedMousePosition = GetRenderHelper().GetWindow().mapPixelToCoords(mousePosition);
-            if (GetRenderHelper().GetStartButton().first.getGlobalBounds().contains(translatedMousePosition))
-            {
-                sf::FloatRect redLineBounds = GetRenderHelper().GetRedLine().getBounds();
-
-                for (int i = 4; i >= 0; --i)
-                {
-                    if (SlotsInBounds(i)) 
-                    { 
-                        CalculateScore(i);
-                        break;
-                    }
-                }
-
-                SetFinishStatus(true);
-                return;
-            }
+            FindSlotsInBounds();
+            SetFinishStatus(true);
+            return;
         }
     } 
 }
