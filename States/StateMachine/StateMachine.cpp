@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 
 StateMachine::StateMachine() {}
-void StateMachine::AddState(IState* state) { states.push_back(state); }
+void StateMachine::AddState(State* state) { states.push_back(state); }
 void StateMachine::Loop()
 {
     if (states[index]->IsFinished())

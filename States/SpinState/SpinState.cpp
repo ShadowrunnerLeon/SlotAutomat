@@ -1,6 +1,6 @@
 #include "SpinState.h"
 
-SpinState::SpinState(RenderHelper& _renderHelper, sf::Time _timer, float _spinSpeed) : renderHelper(_renderHelper), timer(_timer), spinSpeed(_spinSpeed) 
+SpinState::SpinState(RenderHelper& _renderHelper, sf::Time _timer, float _spinSpeed) : State(_renderHelper), timer(_timer), spinSpeed(_spinSpeed) 
 {
     elapsedTime = sf::seconds(0);
 }
@@ -11,18 +11,18 @@ void SpinState::Update()
     sf::Event event;
     sf::Clock clock;
 
-    while (renderHelper.GetWindow().pollEvent(event))
+    while (GetRenderHelper().GetWindow().pollEvent(event))
     {
         if (event.type == sf::Event::Closed)
         {
-            renderHelper.GetWindow().close();
+            GetRenderHelper().GetWindow().close();
         }
         
         if (event.type == sf::Event::MouseButtonPressed)
         {
-            mousePosition = sf::Mouse::getPosition(renderHelper.GetWindow());
-            auto translatedMousePosition = renderHelper.GetWindow().mapPixelToCoords(mousePosition);
-            if (renderHelper.GetStopButton().first.getGlobalBounds().contains(translatedMousePosition))
+            mousePosition = sf::Mouse::getPosition(GetRenderHelper().GetWindow());
+            auto translatedMousePosition = GetRenderHelper().GetWindow().mapPixelToCoords(mousePosition);
+            if (GetRenderHelper().GetStopButton().first.getGlobalBounds().contains(translatedMousePosition))
             {
                 elapsedTime = sf::seconds(0);
                 SetFinishStatus(true);
@@ -33,24 +33,24 @@ void SpinState::Update()
 
     for (int i = 0; i < NUM_SLOTS; ++i)
     {
-        if (renderHelper.GetSlot(i * NUM_SLOTS).sprite.getPosition().y >= END_LINE_Y)
+        if (GetRenderHelper().GetSlot(i * NUM_SLOTS).sprite.getPosition().y >= END_LINE_Y)
         {
             for (int j = 0; j < NUM_SLOTS; ++j)
             {
                 int textureIndex = rand() % NUM_SLOTS;
-                renderHelper.GetSlot(i * NUM_SLOTS + j).sprite.setTexture(renderHelper.GetTexture(textureIndex));
-                renderHelper.GetSlot(i * NUM_SLOTS + j).sprite.setPosition(START_LINE_X + j * 64.f, START_LINE_Y - i * 64.f);
-                renderHelper.SetTextureIndex(i * NUM_SLOTS + j, textureIndex);
+                GetRenderHelper().GetSlot(i * NUM_SLOTS + j).sprite.setTexture(GetRenderHelper().GetTexture(textureIndex));
+                GetRenderHelper().GetSlot(i * NUM_SLOTS + j).sprite.setPosition(START_LINE_X + j * 64.f, START_LINE_Y - i * 64.f);
+                GetRenderHelper().SetTextureIndex(i * NUM_SLOTS + j, textureIndex);
             }
         }
     }
 
-    for (auto& slot : renderHelper.GetSlots()) 
+    for (auto& slot : GetRenderHelper().GetSlots()) 
     {
         slot.sprite.move(0.f, spinSpeed);
         if (slot.sprite.getPosition().y >= START_LINE_Y)
         {
-            renderHelper.GetWindow().draw(slot.sprite);
+            GetRenderHelper().GetWindow().draw(slot.sprite);
         }
     }
 

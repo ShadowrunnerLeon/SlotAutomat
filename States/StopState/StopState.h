@@ -1,17 +1,14 @@
 #ifndef _STOPSTATE_H_
 #define _STOPSTATE_H_
 
-#include "../IState/IState.h"
-#include "../../RenderHelper/RenderHelper.h"
+#include "../State/State.h"
 
-class StopState : public IState
+class StopState : public State
 {
-    private:
-        bool SetFinishStatusfalse;
-        RenderHelper& renderHelper;
-
     public:
         StopState(RenderHelper& _renderHelper);
+        inline bool SlotsInBounds(int range) const;
+        inline void CalculateScore(int range);
         void Update() override;
 };
 

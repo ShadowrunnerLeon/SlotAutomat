@@ -1,14 +1,11 @@
 #ifndef _SPINSTATE_H_
 #define _SPINSTATE_H_
 
-#include "../IState/IState.h"
-#include "../../RenderHelper/RenderHelper.h"
+#include "../State/State.h"
 
-class SpinState : public IState
+class SpinState : public State
 {
     private:
-        bool SetFinishStatusfalse;
-        RenderHelper& renderHelper;
         sf::Time elapsedTime;
         sf::Time timer;
         float spinSpeed;

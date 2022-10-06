@@ -1,17 +1,13 @@
 #ifndef _STARTSTATE_H_
 #define _STARTSTATE_H_
 
-#include "../IState/IState.h"
-#include "../../RenderHelper/RenderHelper.h"
+#include "../State/State.h"
 
-class StartState : public IState
+class StartState : public State
 {
-    private:
-        bool SetFinishStatusfalse;
-        RenderHelper& renderHelper;
-
     public:
         StartState(RenderHelper& _renderHelper);
+        inline void CheckStartButtonPressed();
         void Update() override;
 };
 

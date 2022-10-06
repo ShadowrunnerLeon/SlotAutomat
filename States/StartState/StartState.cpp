@@ -1,23 +1,26 @@
 #include "StartState.h"
 
-StartState::StartState(RenderHelper& _renderHelper) : renderHelper(_renderHelper) {}
+StartState::StartState(RenderHelper& _renderHelper) : State(_renderHelper) {}
+
+inline void StartState::CheckStartButtonPressed()
+{
+    mousePosition = sf::Mouse::getPosition(GetRenderHelper().GetWindow());
+    auto translatedMousePosition = GetRenderHelper().GetWindow().mapPixelToCoords(mousePosition);
+    if (GetRenderHelper().GetStartButton().first.getGlobalBounds().contains(translatedMousePosition))
+    {
+        SetFinishStatus(true);
+        return;
+    }
+}
+
 void StartState::Update()
 {
     sf::Vector2i mousePosition;
     sf::Event event;
 
-    while (renderHelper.GetWindow().pollEvent(event))
+    while (GetRenderHelper().GetWindow().pollEvent(event))
     {
-        if (event.type == sf::Event::Closed) renderHelper.GetWindow().close();
-        if (event.type == sf::Event::MouseButtonPressed)
-        {
-            mousePosition = sf::Mouse::getPosition(renderHelper.GetWindow());
-            auto translatedMousePosition = renderHelper.GetWindow().mapPixelToCoords(mousePosition);
-            if (renderHelper.GetStartButton().first.getGlobalBounds().contains(translatedMousePosition))
-            {
-                SetFinishStatus(true);
-                return;
-            }
-        }
+        if (event.type == sf::Event::Closed) GetRenderHelper().GetWindow().close();
+        if (event.type == sf::Event::MouseButtonPressed) CheckStartButtonPressed();
     }
 }
