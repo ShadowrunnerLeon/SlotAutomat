@@ -4,7 +4,7 @@ StartState::StartState(RenderHelper& _renderHelper) : State(_renderHelper) {}
 
 inline void StartState::CheckStartButtonPressed()
 {
-    mousePosition = sf::Mouse::getPosition(GetRenderHelper().GetWindow());
+    auto mousePosition = sf::Mouse::getPosition(GetRenderHelper().GetWindow());
     auto translatedMousePosition = GetRenderHelper().GetWindow().mapPixelToCoords(mousePosition);
     if (GetRenderHelper().GetStartButton().first.getGlobalBounds().contains(translatedMousePosition))
     {

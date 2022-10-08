@@ -1,30 +1,28 @@
 #include "StopState.h"
-#include "../../RenderHelper/RenderHelper.h"
 
 StopState::StopState(RenderHelper& _renderHelper) : State(_renderHelper) {}
 
-inline bool IsStopButtonPressed() const
+bool IsStopButtonPressed()
 {
-    sf::Vector2i mousePosition;
-    mousePosition = sf::Mouse::getPosition(GetRenderHelper().GetWindow());
+    sf::Vector2i mousePosition = sf::Mouse::getPosition(GetRenderHelper().GetWindow());
     auto translatedMousePosition = GetRenderHelper().GetWindow().mapPixelToCoords(mousePosition);
     return GetRenderHelper().GetStartButton().first.getGlobalBounds().contains(translatedMousePosition);
 }
 
-inline bool StopState::SlotsInBounds(int range) const 
+bool StopState::SlotsInBounds(int range) const 
 {
     sf::FloatRect slotBounds = GetRenderHelper().GetSlot(range * NUM_SLOTS).sprite.getGlobalBounds(); 
     return slotBounds.left >= 90.f && slotBounds.top >= 318.f && slotBounds.left + slotBounds.width <= 90.f + 340.f && slotBounds.top + slotBounds.height <= 84.f + 318.f;
 }
 
-inline void CalculateScore(int range)
+void CalculateScore(int range)
 {
     int texturesNumber[NUM_SLOTS] = {0, 0, 0, 0, 0};
     int maxMatchTexturesNumber = 0;
                         
     for (int j = 0; j < NUM_SLOTS; ++j)
     {
-        int textureIndex = GetRenderHelper().GetSlot(i * NUM_SLOTS + j).textureIndex;
+        int textureIndex = GetRenderHelper().GetSlot(range * NUM_SLOTS + j).textureIndex;
         ++texturesNumber[textureIndex];
         maxMatchTexturesNumber = std::max(maxMatchTexturesNumber, texturesNumber[textureIndex]);
     }
@@ -32,7 +30,7 @@ inline void CalculateScore(int range)
     GetRenderHelper().UpdateScore(maxMatchTexturesNumber * 500);
 }
 
-inline void FindSlotsInBounds()
+void FindSlotsInBounds()
 {
     for (int i = 4; i >= 0; --i)
     {

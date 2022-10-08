@@ -1,6 +1,8 @@
 #ifndef _STATE_H_
 #define _STATE_H_
 
+#include "../../RenderHelper/RenderHelper.h"
+
 class State 
 {
     private:
@@ -12,7 +14,7 @@ class State
         virtual void Update() = 0;
         void SetFinishStatus(bool status);
         bool IsFinished() const;
-        RenderHelper& GetRednderHelper() const;
+        RenderHelper& GetRenderHelper() const;
 };
 
 #endif

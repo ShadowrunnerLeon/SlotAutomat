@@ -7,10 +7,10 @@ class StopState : public State
 {
     public:
         StopState(RenderHelper& _renderHelper);
-        inline void IsStopButtonPressed() const;
-        inline bool SlotsInBounds(int range) const;
-        inline void CalculateScore(int range);
-        inline void FindSlotsInBounds();
+        bool IsStopButtonPressed();
+        bool SlotsInBounds(int range) const;
+        void CalculateScore(int range);
+        void FindSlotsInBounds();
         void Update() override;
 };
 
