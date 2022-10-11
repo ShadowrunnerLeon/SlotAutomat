@@ -1,6 +1,6 @@
 #include "RenderHelper.h"
 
-RenderHelper::RenderHelper(sf::RenderWindow& _window) : window(_window) 
+RenderHelper::RenderHelper(sf::RenderWindow* _window) : window(_window) 
 {
     if (!font.loadFromFile("../resources/fonts/Oswald-Bold.ttf"))
     {
@@ -13,6 +13,12 @@ RenderHelper::RenderHelper(sf::RenderWindow& _window) : window(_window)
     textures = std::vector<sf::Texture>(5, sf::Texture());
     redLine = sf::VertexArray(sf::Lines, 8);
     scoreInteger = 0;
+}
+
+static RenderHelper& GetInstance()
+{
+    static RenderHelper instance;
+    return instance;
 }
 
 std::pair<sf::Text, sf::VertexArray> RenderHelper::RenderButton(const sf::String &textString, float x, float y) const
@@ -105,7 +111,7 @@ void RenderHelper::RenderScore()
 
 sf::RenderWindow& RenderHelper::GetWindow()
 {
-    return window;
+    return *window;
 }
 
 std::pair<sf::Text, sf::VertexArray>& RenderHelper::GetStartButton()

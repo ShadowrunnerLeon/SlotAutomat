@@ -11,7 +11,7 @@ class SpinState : public State
         float spinSpeed;
 
     public:
-        SpinState(RenderHelper& _renderHelper, sf::Time _timer, float _spinSpeed);
+        SpinState(sf::Time _timer, float _spinSpeed);
         void Update() override;
 };
 

@@ -6,8 +6,8 @@
 class StartState : public State
 {
     public:
-        StartState(RenderHelper& _renderHelper);
-        inline void CheckStartButtonPressed();
+        StartState() = default;
+        void CheckStartButtonPressed();
         void Update() override;
 };
 

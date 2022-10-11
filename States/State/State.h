@@ -7,14 +7,12 @@ class State
 {
     private:
         bool finishStatus;
-        RenderHelper& renderHelper;
 
     public:
-        State(RenderHelper& _renderHelper);
+        State() = default;
         virtual void Update() = 0;
         void SetFinishStatus(bool status);
         bool IsFinished() const;
-        RenderHelper& GetRenderHelper() const;
 };
 
 #endif

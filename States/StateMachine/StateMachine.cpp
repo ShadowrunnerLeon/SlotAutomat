@@ -7,7 +7,7 @@ void StateMachine::Loop()
 {
     if (states[index]->IsFinished())
     {
-        states[index]->SetFinishStatus();
+        states[index]->SetFinishStatus(true);
 
         if (index + 1 > states.size() - 1) index = -1;
         states[++index]->Update();

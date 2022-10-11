@@ -9,15 +9,15 @@
 int main() 
 {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Window");
-    RenderHelper renderHelper(window);
+    RenderHelper renderHelper(&window);
 
     renderHelper.RenderSlots();
     renderHelper.RenderRedLine();
     renderHelper.RenderScore();
 
-    StartState startState(renderHelper);
-    SpinState spinState(renderHelper, sf::seconds(5), 0.1);
-    StopState stopState(renderHelper);
+    StartState startState;
+    SpinState spinState(sf::seconds(5), 0.1);
+    StopState stopState;
 
     StateMachine stateMachine;
     stateMachine.AddState(&startState);

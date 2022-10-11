@@ -22,15 +22,18 @@ class RenderHelper
     private:
         std::vector<sf::Texture> textures;
         sf::Font font;
-        sf::RenderWindow& window;
+        sf::RenderWindow* window;
         std::pair<sf::Text, sf::VertexArray> startButton, stopButton;
         std::vector<SlotTextureIndex> slots;
-        sf::VertexArray redLine;
-        sf::Text score;
-        int scoreInteger;
+
+        static sf::VertexArray redLine;
+        static sf::Text score;
+        static int scoreInteger;
 
     public:
-        RenderHelper(sf::RenderWindow& _window);
+        RenderHelper() = default;
+        RenderHelper(sf::RenderWindow* _window);
+        static RenderHelper& GetInstance();
         std::pair<sf::Text, sf::VertexArray> RenderButton(const sf::String &textString, float x, float y) const;
         void RenderSlots();
         void RenderRedLine();
