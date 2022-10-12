@@ -14,7 +14,16 @@ struct SlotTextureIndex
 {
     sf::Sprite sprite;
     int textureIndex;
+    SlotTextureIndex() = default;
     SlotTextureIndex(sf::Sprite _sprite, int _textureIndex) : sprite(_sprite), textureIndex(_textureIndex) {}
+};
+
+struct Button
+{
+    sf::Text text;
+    sf::VertexArray vertexArray;
+    Button() = default;
+    Button(sf::Text _text, sf::VertexArray _vertexArray) : text(_text), vertexArray(_vertexArray) {}
 };
 
 class RenderHelper
@@ -22,26 +31,24 @@ class RenderHelper
     private:
         std::vector<sf::Texture> textures;
         sf::Font font;
-        sf::RenderWindow* window;
-        std::pair<sf::Text, sf::VertexArray> startButton, stopButton;
+        sf::RenderWindow window;
+        Button startButton, stopButton;
         std::vector<SlotTextureIndex> slots;
 
-        static sf::VertexArray redLine;
-        static sf::Text score;
-        static int scoreInteger;
+        sf::VertexArray redLine;
+        sf::Text score;
+        int scoreInteger;
 
     public:
-        RenderHelper() = default;
-        RenderHelper(sf::RenderWindow* _window);
-        static RenderHelper& GetInstance();
-        std::pair<sf::Text, sf::VertexArray> RenderButton(const sf::String &textString, float x, float y) const;
+        RenderHelper();
+        Button RenderButton(const sf::String &textString, float x, float y) const;
         void RenderSlots();
         void RenderRedLine();
         void RenderScore();
 
         sf::RenderWindow& GetWindow();
-        std::pair<sf::Text, sf::VertexArray>& GetStartButton();
-        std::pair<sf::Text, sf::VertexArray>& GetStopButton();
+        Button& GetStartButton();
+        Button& GetStopButton();
         SlotTextureIndex& GetSlot(int index);
         std::vector<SlotTextureIndex>& GetSlots();
         void SetTextureIndex(int index, int value);

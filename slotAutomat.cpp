@@ -8,34 +8,33 @@
 
 int main() 
 {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Window");
-    RenderHelper renderHelper(&window);
+    RenderHelper renderHelper;
 
     renderHelper.RenderSlots();
     renderHelper.RenderRedLine();
     renderHelper.RenderScore();
 
-    StartState startState;
-    SpinState spinState(sf::seconds(5), 0.1);
-    StopState stopState;
+    StartState startState(&renderHelper);
+    SpinState spinState(&renderHelper, sf::seconds(5), 0.1);
+    StopState stopState(&renderHelper);
 
     StateMachine stateMachine;
     stateMachine.AddState(&startState);
     stateMachine.AddState(&spinState);
     stateMachine.AddState(&stopState);
 
-    while (window.isOpen())
+    while (renderHelper.GetWindow().isOpen())
     {
-        window.clear(sf::Color::Black);
-        window.draw(renderHelper.GetScore());
-        window.draw(renderHelper.GetStartButton().first);
-        window.draw(renderHelper.GetStartButton().second);
-        window.draw(renderHelper.GetStopButton().first);
-        window.draw(renderHelper.GetStopButton().second);
-        window.draw(renderHelper.GetRedLine());
+        renderHelper.GetWindow().clear(sf::Color::Black);
+        renderHelper.GetWindow().draw(renderHelper.GetScore());
+        renderHelper.GetWindow().draw(renderHelper.GetStartButton().text);
+        renderHelper.GetWindow().draw(renderHelper.GetStartButton().vertexArray);
+        renderHelper.GetWindow().draw(renderHelper.GetStopButton().text);
+        renderHelper.GetWindow().draw(renderHelper.GetStopButton().vertexArray);
+        renderHelper.GetWindow().draw(renderHelper.GetRedLine());
 
-        stateMachine.Loop();
+        stateMachine.Update();
 
-        window.display();
+        renderHelper.GetWindow().display();
     }
 }

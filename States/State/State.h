@@ -5,14 +5,12 @@
 
 class State 
 {
-    private:
-        bool finishStatus;
-
     public:
+        bool finishStatus;
+        RenderHelper *renderHelper;
+
         State() = default;
         virtual void Update() = 0;
-        void SetFinishStatus(bool status);
-        bool IsFinished() const;
 };
 
 #endif

@@ -13,7 +13,7 @@ class StateMachine
     public:
         StateMachine();
         void AddState(State* state);
-        void Loop();
+        void Update();
 };
 
 #endif

@@ -1,6 +1,6 @@
 #include "RenderHelper.h"
 
-RenderHelper::RenderHelper(sf::RenderWindow* _window) : window(_window) 
+RenderHelper::RenderHelper() : window(sf::RenderWindow(sf::VideoMode(800, 600), "Window"))
 {
     if (!font.loadFromFile("../resources/fonts/Oswald-Bold.ttf"))
     {
@@ -15,13 +15,7 @@ RenderHelper::RenderHelper(sf::RenderWindow* _window) : window(_window)
     scoreInteger = 0;
 }
 
-static RenderHelper& GetInstance()
-{
-    static RenderHelper instance;
-    return instance;
-}
-
-std::pair<sf::Text, sf::VertexArray> RenderHelper::RenderButton(const sf::String &textString, float x, float y) const
+Button RenderHelper::RenderButton(const sf::String &textString, float x, float y) const
 {
     sf::Text text;
     text.setFont(font);
@@ -47,7 +41,7 @@ std::pair<sf::Text, sf::VertexArray> RenderHelper::RenderButton(const sf::String
         boundingRect[i].color = sf::Color::Red;
     }
 
-    return std::make_pair(text, boundingRect);
+    return Button(text, boundingRect);
 }
 
 void RenderHelper::RenderSlots()
@@ -111,15 +105,15 @@ void RenderHelper::RenderScore()
 
 sf::RenderWindow& RenderHelper::GetWindow()
 {
-    return *window;
+    return window;
 }
 
-std::pair<sf::Text, sf::VertexArray>& RenderHelper::GetStartButton()
+Button& RenderHelper::GetStartButton()
 {
     return startButton;
 }
 
-std::pair<sf::Text, sf::VertexArray>& RenderHelper::GetStopButton()
+Button& RenderHelper::GetStopButton()
 {
     return stopButton;
 }

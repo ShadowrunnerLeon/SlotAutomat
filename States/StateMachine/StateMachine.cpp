@@ -3,11 +3,11 @@
 
 StateMachine::StateMachine() {}
 void StateMachine::AddState(State* state) { states.push_back(state); }
-void StateMachine::Loop()
+void StateMachine::Update()
 {
-    if (states[index]->IsFinished())
+    if (states[index]->finishStatus)
     {
-        states[index]->SetFinishStatus(true);
+        states[index]->finishStatus =false;
 
         if (index + 1 > states.size() - 1) index = -1;
         states[++index]->Update();

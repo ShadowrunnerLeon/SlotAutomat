@@ -6,7 +6,7 @@
 class StopState : public State
 {
     public:
-        StopState() = default;
+        StopState(RenderHelper* _renderHelper);
         bool IsStopButtonPressed();
         bool SlotsInBounds(int range) const;
         void CalculateScore(int range);

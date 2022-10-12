@@ -1,7 +1,8 @@
 #include "SpinState.h"
 
-SpinState::SpinState(sf::Time _timer, float _spinSpeed) : timer(_timer), spinSpeed(_spinSpeed) 
+SpinState::SpinState(RenderHelper* _renderHelper, sf::Time _timer, float _spinSpeed) : timer(_timer), spinSpeed(_spinSpeed) 
 {
+    renderHelper = _renderHelper;
     elapsedTime = sf::seconds(0);
 }
 
@@ -11,21 +12,21 @@ void SpinState::Update()
     sf::Event event;
     sf::Clock clock;
 
-    while (RenderHelper::GetInstance().GetWindow().pollEvent(event))
+    while (renderHelper->GetWindow().pollEvent(event))
     {
         if (event.type == sf::Event::Closed)
         {
-            RenderHelper::GetInstance().GetWindow().close();
+            renderHelper->GetWindow().close();
         }
         
         if (event.type == sf::Event::MouseButtonPressed)
         {
-            mousePosition = sf::Mouse::getPosition(RenderHelper::GetInstance().GetWindow());
-            auto translatedMousePosition = RenderHelper::GetInstance().GetWindow().mapPixelToCoords(mousePosition);
-            if (RenderHelper::GetInstance().GetStopButton().first.getGlobalBounds().contains(translatedMousePosition))
+            mousePosition = sf::Mouse::getPosition(renderHelper->GetWindow());
+            auto translatedMousePosition = renderHelper->GetWindow().mapPixelToCoords(mousePosition);
+            if (renderHelper->GetStopButton().text.getGlobalBounds().contains(translatedMousePosition))
             {
                 elapsedTime = sf::seconds(0);
-                SetFinishStatus(true);
+                finishStatus = true;
                 return;
             }
         }
@@ -33,24 +34,24 @@ void SpinState::Update()
 
     for (int i = 0; i < NUM_SLOTS; ++i)
     {
-        if (RenderHelper::GetInstance().GetSlot(i * NUM_SLOTS).sprite.getPosition().y >= END_LINE_Y)
+        if (renderHelper->GetSlot(i * NUM_SLOTS).sprite.getPosition().y >= END_LINE_Y)
         {
             for (int j = 0; j < NUM_SLOTS; ++j)
             {
                 int textureIndex = rand() % NUM_SLOTS;
-                RenderHelper::GetInstance().GetSlot(i * NUM_SLOTS + j).sprite.setTexture(RenderHelper::GetInstance().GetTexture(textureIndex));
-                RenderHelper::GetInstance().GetSlot(i * NUM_SLOTS + j).sprite.setPosition(START_LINE_X + j * 64.f, START_LINE_Y - i * 64.f);
-                RenderHelper::GetInstance().SetTextureIndex(i * NUM_SLOTS + j, textureIndex);
+                renderHelper->GetSlot(i * NUM_SLOTS + j).sprite.setTexture(renderHelper->GetTexture(textureIndex));
+                renderHelper->GetSlot(i * NUM_SLOTS + j).sprite.setPosition(START_LINE_X + j * 64.f, START_LINE_Y - i * 64.f);
+                renderHelper->SetTextureIndex(i * NUM_SLOTS + j, textureIndex);
             }
         }
     }
 
-    for (auto& slot : RenderHelper::GetInstance().GetSlots()) 
+    for (auto& slot : renderHelper->GetSlots()) 
     {
         slot.sprite.move(0.f, spinSpeed);
         if (slot.sprite.getPosition().y >= START_LINE_Y)
         {
-            RenderHelper::GetInstance().GetWindow().draw(slot.sprite);
+            renderHelper->GetWindow().draw(slot.sprite);
         }
     }
 
@@ -59,6 +60,6 @@ void SpinState::Update()
     {
         elapsedTime = sf::seconds(0);
         std::cout << "timeout" << std::endl;
-        SetFinishStatus(true);
+        finishStatus = true;
     }
 }

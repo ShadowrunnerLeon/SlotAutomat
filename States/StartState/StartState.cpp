@@ -1,12 +1,17 @@
 #include "StartState.h"
 
+StartState::StartState(RenderHelper* _renderHelper)
+{
+    renderHelper = _renderHelper;
+}
+
 void StartState::CheckStartButtonPressed()
 {
-    auto mousePosition = sf::Mouse::getPosition(RenderHelper::GetInstance().GetWindow());
-    auto translatedMousePosition = RenderHelper::GetInstance().GetWindow().mapPixelToCoords(mousePosition);
-    if (RenderHelper::GetInstance().GetStartButton().first.getGlobalBounds().contains(translatedMousePosition))
+    auto mousePosition = sf::Mouse::getPosition(renderHelper->GetWindow());
+    auto translatedMousePosition = renderHelper->GetWindow().mapPixelToCoords(mousePosition);
+    if (renderHelper->GetStartButton().text.getGlobalBounds().contains(translatedMousePosition))
     {
-        SetFinishStatus(true);
+        finishStatus = true;
         return;
     }
 }
@@ -16,9 +21,9 @@ void StartState::Update()
     sf::Vector2i mousePosition;
     sf::Event event;
 
-    while (RenderHelper::GetInstance().GetWindow().pollEvent(event))
+    while (renderHelper->GetWindow().pollEvent(event))
     {
-        if (event.type == sf::Event::Closed) RenderHelper::GetInstance().GetWindow().close();
+        if (event.type == sf::Event::Closed) renderHelper->GetWindow().close();
         if (event.type == sf::Event::MouseButtonPressed) CheckStartButtonPressed();
     }
 }
