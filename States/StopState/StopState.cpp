@@ -63,7 +63,7 @@ void StopState::Update()
         if (event.type == sf::Event::MouseButtonPressed && IsStopButtonPressed())
         {
             FindSlotsInBounds();
-            finishStatus = true;
+            SetFinishStatus(true);
             return;
         }
     } 

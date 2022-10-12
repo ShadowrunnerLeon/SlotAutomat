@@ -11,7 +11,7 @@ void StartState::CheckStartButtonPressed()
     auto translatedMousePosition = renderHelper->GetWindow().mapPixelToCoords(mousePosition);
     if (renderHelper->GetStartButton().text.getGlobalBounds().contains(translatedMousePosition))
     {
-        finishStatus = true;
+        SetFinishStatus(true);
         return;
     }
 }

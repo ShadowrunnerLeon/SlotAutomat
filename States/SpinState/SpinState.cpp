@@ -26,7 +26,7 @@ void SpinState::Update()
             if (renderHelper->GetStopButton().text.getGlobalBounds().contains(translatedMousePosition))
             {
                 elapsedTime = sf::seconds(0);
-                finishStatus = true;
+                SetFinishStatus(true);
                 return;
             }
         }
@@ -60,6 +60,6 @@ void SpinState::Update()
     {
         elapsedTime = sf::seconds(0);
         std::cout << "timeout" << std::endl;
-        finishStatus = true;
+        SetFinishStatus(true);
     }
 }
